@@ -23,22 +23,10 @@ $notes = $db->query('SELECT * FROM notes WHERE user_id = :user_id', [
 $total_notes = Count($notes);
 $pages = [];
 // Se número de páginas for maior que 7 -> ?????????
-
-/* 
-$pages = [
-    0 => [
-        $start = 0;
-        $end = 4;
-        $elements = [0, 1, 2, 3, 4]
-    ];
-    .
-    .
-    .
-];
-*/ 
+//dd($pages);
 
 $total_pages = intdiv($total_notes, 5);
-$resto = $total_notes % 5;
+$remainder = $total_notes % 5;
 
 if ($total_notes / 5 > intdiv($total_notes, 5)) {
     $total_pages += 1;
@@ -49,10 +37,10 @@ for ($p=0; $p < $total_pages; $p++) {
     $elements = [];
 
     if ($p == $total_pages - 1) {
-        if ($resto == 0) {
+        if ($remainder == 0) {
             $end = (($p * 5) + 4);
         } else {
-            $end = $resto + ($p * 5) - 1;
+            $end = $remainder + ($p * 5) - 1;
         }
     } else {
         $end = ($p * 5) + 4;
@@ -84,17 +72,14 @@ if (isset($_POST['last'])) {
 }
 
 if (isset($_POST['next'])) {
-    if ($current_page < Count($pages) ) {
+    if ($last_current < Count($pages) ) {
         $current_page = (int) $last_current + 1;   
     }
 }
 
-if ($current_page > (int) end($pages) + 1) {
-    $current_page = (int) end($pages) + 1;
+if ($current_page > (int) array_key_last($pages)) {
+    $current_page = (int) array_key_last($pages);
 }   
-
-//dd($current_page);
-// 2 => 1
 
 view("notes/index.view.php", [
     'heading' => 'My Notes',
