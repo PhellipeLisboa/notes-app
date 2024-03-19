@@ -4,6 +4,16 @@ use Core\Database;
 use Core\App;
 use PHPUnit\Framework\Constraint\Count;
 
+if (isset($_POST['last'])) {
+    $last_current = $_POST['last'];
+}
+if (isset($_POST['current'])) {
+    $current_page = $_POST['current'];
+}
+if (isset($_POST['next'])) {
+    $last_current = $_POST['next'];
+}
+
 $db = App::resolve(Database::class);
 
 $notes = $db->query('SELECT * FROM notes WHERE user_id = :user_id', [
@@ -21,62 +31,70 @@ $pages = [
         $end = 4;
         $elements = [0, 1, 2, 3, 4]
     ];
-    1 => [
-        $start = 5;
-        $end = 9;
-        $elements = [5, 6, 7, 8, 9]
-    ];
-    2 => [
-        $start = 10;
-        $end = 14;
-        $elements = [10, 11, 12, 13, 14]
-    ];
+    .
+    .
+    .
 ];
 */ 
 
-for ($n=0; $n < $total_notes; $n++) { 
+$total_pages = intdiv($total_notes, 5);
+$resto = $total_notes % 5;
 
-    $total_pages = intdiv($total_notes, 5);
-    if ($total_notes / 5 > intdiv($total_notes, 5)) {
-        $total_pages += 1;
-    }
-
-    for ($p=0; $p < $total_pages; $p++) { 
-
-        $elements = [];
-
-        for ($e= $p * 5; $e < (($p * 5) + 4) + 1; $e++) { 
-            $elements[] = $e;
-        }
-
-        $page_data = [
-            'start' => $p * 5,
-            'end' => ($p * 5) + 4,
-            'elements' => $elements,
-        ];
-
-        $pages["{$p}"] = $page_data;
-
-    }
-    
+if ($total_notes / 5 > intdiv($total_notes, 5)) {
+    $total_pages += 1;
 }
 
-//dd($pages);
+for ($p=0; $p < $total_pages; $p++) { 
 
-$total_pages = Count($pages);
+    $elements = [];
 
-$n = 0;
+    if ($p == $total_pages - 1) {
+        if ($resto == 0) {
+            $end = (($p * 5) + 4);
+        } else {
+            $end = $resto + ($p * 5) - 1;
+        }
+    } else {
+        $end = ($p * 5) + 4;
+    }
+    
+    for ($e= $p; $e < $end; $e++) { 
+        $elements[] = $e;
+    }   
 
-/*
-while ($n < Count($notes)) :
-for ($i=0; $i < 5; $i++) :
-$start = $initial_item[$n];
+    $page_data = [
+        'start' => $p * 5,
+        'end' => $end,
+        'elements' => $elements,
+    ];
 
-    $notes[$start + $i]['created_at'];
+    $pages["{$p}"] = $page_data;
+    unset($elements);
 
-endfor;
-$n += 1;
-endwhile; */
+}
+
+if (!isset($_POST['current'])) {
+    $current_page = 0;
+}
+
+if (isset($_POST['last'])) {
+    if ($last_current >= 1) {
+        $current_page = (int) $last_current - 1;
+    }
+}
+
+if (isset($_POST['next'])) {
+    if ($current_page < Count($pages) ) {
+        $current_page = (int) $last_current + 1;   
+    }
+}
+
+if ($current_page > (int) end($pages) + 1) {
+    $current_page = (int) end($pages) + 1;
+}   
+
+//dd($current_page);
+// 2 => 1
 
 view("notes/index.view.php", [
     'heading' => 'My Notes',
@@ -84,4 +102,5 @@ view("notes/index.view.php", [
     'total_notes' => $total_notes,
     'pages' => $pages,
     'notes' => $notes,
+    'current_page' => $current_page ?? 0,
 ]);
