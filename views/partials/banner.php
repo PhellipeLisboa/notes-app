@@ -9,7 +9,7 @@
                 <div class="flex-end">
                     <?php if (isset($heading) && $heading == 'My Notes') : ?>
                     <a href="/notes/create">
-                        <button class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                        <button class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-1 px-2 mr-4 rounded">
                             Create Note
                         </button>
                     </a>

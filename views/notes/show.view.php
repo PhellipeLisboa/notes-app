@@ -26,22 +26,6 @@
 
         </footer>
     </div>
-
-    <div class="space-y-12">
-        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 mt-5 rounded-lg">
-            <div class="col-span-full">
-                <form action="/note" method="POST">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="id" value="<?= $note['id']?>">
-
-                    <button type="submit"
-                        class="rounded-md bg-red-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500">Delete
-                        Note</button>
-
-                </form>
-            </div>
-        </div>
-    </div>
 </main>
 
 <?php require(base_path('views/partials/footer.php'))?>

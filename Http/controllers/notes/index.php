@@ -1,8 +1,10 @@
 <?php 
 
+
 use Core\Database;
 use Core\App;
-use PHPUnit\Framework\Constraint\Count;
+use Http\Pagination\Paginator;
+
 
 if (isset($_POST['last'])) {
     $last_current = $_POST['last'];
@@ -14,6 +16,20 @@ if (isset($_POST['next'])) {
     $last_current = $_POST['next'];
 }
 
+
+/* 
+
+$pages = Paginator::pages();
+
+
+= LoginForm::validate($attributes = [
+    'email' => $_POST['email'],
+    'password' => $_POST['password'],
+]);
+
+*/
+
+
 $db = App::resolve(Database::class);
 
 $notes = $db->query('SELECT * FROM notes WHERE user_id = :user_id', [
@@ -22,44 +38,45 @@ $notes = $db->query('SELECT * FROM notes WHERE user_id = :user_id', [
 
 $total_notes = Count($notes);
 $pages = [];
-// Se número de páginas for maior que 7 -> ?????????
-//dd($pages);
 
 $total_pages = intdiv($total_notes, 5);
 $remainder = $total_notes % 5;
 
+// Get the number of pages, including the last page even if that is not full (5 notes)
 if ($total_notes / 5 > intdiv($total_notes, 5)) {
     $total_pages += 1;
 }
 
-for ($p=0; $p < $total_pages; $p++) { 
+// loop to put every pages's first note, last note and an array with all the notes that belongs to that page inside the $pages array
+for ($page=0; $page < $total_pages; $page++) { 
 
     $elements = [];
 
-    if ($p == $total_pages - 1) {
+    // Define the last element of the last page
+    if ($page == $total_pages - 1) {
         if ($remainder == 0) {
-            $end = (($p * 5) + 4);
+            $end = (($page * 5) + 4);
         } else {
-            $end = $remainder + ($p * 5) - 1;
+            $end = $remainder + ($page * 5) - 1;
         }
     } else {
-        $end = ($p * 5) + 4;
+        $end = ($page * 5) + 4;
     }
     
-    for ($e= $p; $e < $end; $e++) { 
-        $elements[] = $e;
+    for ($element= $page; $element < $end; $element++) { 
+        $elements[] = $element;
     }   
 
     $page_data = [
-        'start' => $p * 5,
+        'start' => $page * 5,
         'end' => $end,
         'elements' => $elements,
     ];
 
-    $pages["{$p}"] = $page_data;
-    unset($elements);
-
+    $pages["{$page}"] = $page_data;
 }
+
+/* -------------------------------------- */
 
 if (!isset($_POST['current'])) {
     $current_page = 0;

@@ -41,10 +41,14 @@ $user = $db->query('select * from users where email = :email', [
 
 
 if ($user) {
-    // then someone eith that email already exists and has an account.
-    // If yes, redirect to a login page.
-    header('location: /');
+
+    $errors['email'] = 'This email address is already in use.';
+    return view('registration/create.view.php', [
+        'errors' => $errors
+    ]);
+    header('location: /register');
     exit();
+    
 } else {
     // Is not, save one to the database, and then log the user in, and redirect.
     $db->query('INSERT INTO users(username, email, password) VALUES(:username, :email, :password)', [
