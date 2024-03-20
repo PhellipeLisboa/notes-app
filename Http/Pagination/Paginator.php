@@ -4,71 +4,77 @@
 namespace Http\Pagination;
 
 
-use Core\Database;
-use Core\App;
-
-
 class Paginator
 {
 
 
-    public $total_notes;
+    public $elements_per_page;
+    public $total_itens;
+    public $total_pages;
+    public $remainder;
+    public $pages = [];
     
     
-    public function __construct()
+    public function __construct($array_to_paginate, $elements_per_page = 5)
     {
-        $notes = App::resolve(Database::class)->query('SELECT * FROM notes WHERE user_id = :user_id', [
-            'user_id' => $_SESSION['user']['id']
-        ])->get();
-    
-        $this->total_notes = Count($notes);
+        $this->total_itens = Count($array_to_paginate);
+        $this->elements_per_page = $elements_per_page;
     }
 
 
-    public static function validate($attributes)
-    {   
-        
-        $pages = [];
-    
-        $total_pages = intdiv(self::$total_notes, 5);
-        $remainder = self::$total_notes % 5;
-    
-        // Get the number of pages, including the last page even if that is not full (5 notes)
-        if (self::$total_notes / 5 > intdiv(self::$total_notes, 5)) {
-            $total_pages += 1;
+    public function getTotalPages()
+    {
+        $this->total_pages = $this->total_itens / $this->elements_per_page;
+
+        if ($this->total_pages != floor($this->total_pages)) {
+            $this->total_pages = ceil($this->total_pages);
         }
-    
-        // loop to put every pages's first note, last note and an array with all the notes that belongs to that page inside the $pages array
-        for ($page=0; $page < $total_pages; $page++) { 
+    }
+
+
+    public function getRemainder()
+    {
+        $this->remainder = $this->total_itens % $this->elements_per_page;
+    }
+
+
+    public function turnIntoPages()
+    {
+        $this->getTotalPages();
+        $this->getRemainder();
+        
+        for ($page_number=0; $page_number < $this->total_pages; $page_number++) { 
     
             $elements = [];
-    
-            // Define the last element of the last page
-            if ($page == $total_pages - 1) {
-                if ($remainder == 0) {
-                    $end = (($page * 5) + 4);
-                } else {
-                    $end = $remainder + ($page * 5) - 1;
-                }
-            } else {
-                $end = ($page * 5) + 4;
-            }
+
+            // Degine the first elements of each page
+            $firts_of_the_page = $page_number * $this->elements_per_page;
             
-            for ($element= $page; $element < $end; $element++) { 
+            // Define the last element of the last page
+            $end_key = $firts_of_the_page + ($this->elements_per_page - 1);
+
+            if ($page_number == $this->total_pages - 1 && $this->remainder !== 0) {
+                $end_key = $this->remainder + ($firts_of_the_page) - 1;
+            }
+          
+            
+            for ($element= $firts_of_the_page; $element < $end_key + 1; $element++) { 
+                /* echo 'page_number: ' . $firts_of_the_page;
+                echo '<br>';
+                echo 'end_key: ' . $end_key;
+                echo '<br>'; */
                 $elements[] = $element;
             }   
     
             $page_data = [
-                'start' => $page * 5,
-                'end' => $end,
+                'start' => $firts_of_the_page,
+                'end' => $end_key,
                 'elements' => $elements,
             ];
     
-            $pages["{$page}"] = $page_data;
+            $this->pages["{$page_number}"] = $page_data;
         }
+
+        return $this->pages;
     }
-    
-    /* $db = App::resolve(Database::class); */
-
-
 }
