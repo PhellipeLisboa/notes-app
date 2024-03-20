@@ -1,6 +1,8 @@
 <?php 
 
+
 use Core\Response;
+
 
 function dd($value) {
     echo "<pre>";
@@ -9,9 +11,11 @@ function dd($value) {
     die();
 };
 
+
 function urlIS($value) {
     return $_SERVER['REQUEST_URI'] === $value;
 };
+
 
 function abort($code = 404) {
     http_response_code($code);
@@ -20,6 +24,7 @@ function abort($code = 404) {
 
     die();
 }
+
 
 function authorize($condition, $status = Response::FORBIDDEN) {
     if (! $condition) {
@@ -40,11 +45,13 @@ function view($path, $attributes = [])
     require base_path('views/' . $path);
 }
 
+
 function redirect($path)
 {
     header("location: {$path}");
     exit();
 }
+
 
 function old($key, $default = '')
 {

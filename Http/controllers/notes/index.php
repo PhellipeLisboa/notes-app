@@ -25,11 +25,11 @@ $current_page = $paginator->handleNavigation([
 
 
 view("notes/index.view.php", [
-    'heading' => 'My Notes',
+    'heading' => 'Notes',
     'total_pages' => $paginator->total_pages,
     'total_notes' => $paginator->total_itens,
     'pages' => $pages,
     'notes' => $notes,
     'current_page' => $current_page ?? 0,
-    'elements_per_page' => $paginator->ElementsPerPage(),
+    'elements_per_page' => $paginator->elements_per_page,
 ]);

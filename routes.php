@@ -1,6 +1,8 @@
 <?php 
 
+
 $router->get('/', 'index.php');
+
 
 $router->get('/notes', 'notes/index.php')->only('auth');
 $router->get('/note', 'notes/show.php')->only('auth');

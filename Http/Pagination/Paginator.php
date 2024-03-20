@@ -23,14 +23,18 @@ class Paginator
     {
         $this->total_itens = Count($array_to_paginate);
 
-        // Check if user's elements_per_page input was passed, if yes create $this->input_elements_per_page.
+        // Check if user's elements_per_page input was passed, if not unset($this->input_elements_per_page).
         if ($input_elements_per_page === null) {
             unset($this->input_elements_per_page);
-        } else {
-            if (isset($input_elements_per_page) && $input_elements_per_page > 0 && is_numeric($input_elements_per_page)) {
-                $this->input_elements_per_page = $input_elements_per_page;
-            }
         }
+        
+        // If yes, create $this->input_elements_per_page.
+        if (isset($input_elements_per_page) && $input_elements_per_page > 0 && is_numeric($input_elements_per_page)) {
+            $this->input_elements_per_page = $input_elements_per_page;
+        } else {
+            $this->input_elements_per_page = 4;
+        }
+        
     }
 
 
@@ -47,12 +51,6 @@ class Paginator
     public function getRemainder()
     {
         $this->remainder = $this->total_itens % $this->elements_per_page;
-    }
-
-
-    public function ElementsPerPage()
-    {
-        return $this->elements_per_page;
     }
 
 
@@ -73,9 +71,10 @@ class Paginator
 
             // Degine the first elements of each page
             $firt_of_the_page = $page_number * $this->elements_per_page;
-            // Define the last element of the last page
+            // Define the last element of the page
             $end_key = $firt_of_the_page + ($this->elements_per_page - 1);
 
+            // Define the last element of the last page IF IT'S NOT FULL
             if ($page_number == $this->total_pages - 1 && $this->remainder !== 0) {
                 $end_key = $this->remainder + ($firt_of_the_page) - 1;
             }

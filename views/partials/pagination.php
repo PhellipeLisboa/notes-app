@@ -8,7 +8,8 @@
 
                     <div>
                         <label for="elements_per_page"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Itens per page:</label>
+                            class="block mb-2 text-sm font-medium text-white dark:text-white">Itens per
+                            page:</label>
                         <div class="relative flex items-center max-w-[8rem]">
                             <input type="text" id="elements_per_page" name="elements_per_page" data-input-counter
                                 aria-describedby="helper-text-explanation"
