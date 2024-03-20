@@ -58,14 +58,6 @@ if ($user) {
     ]);
 }
 
-// mark that the user has logged in.
-
-/* login([
-    'email' => $email
-]);
-
-header('location: /');
-exit(); */
 
 $form = new LoginForm([
     'email' => $email,

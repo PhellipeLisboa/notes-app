@@ -27,5 +27,5 @@ $db->query('INSERT INTO notes(title, body, user_id) VALUES(:title, :body, :user_
     'user_id' => $_SESSION['user']['id']
 ]);     
 
-header('Location: /notes');
-die();
+
+redirect('/notes');

@@ -27,9 +27,6 @@ if (! $signedIn) {
 redirect('/');
 
 
-// return redirect('/login');
-
-
 
 
 
