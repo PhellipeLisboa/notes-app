@@ -34,7 +34,7 @@
                  -->
 
                     <div>
-                        <button type="submit" name="last" value="<?= $current_page ?>"
+                        <button type="submit" name="previous" value="<?= $current_page ?>"
                             class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-neutral-300 rounded-l-md hover:bg-neutral-300 hover:text-black hover:font-bold focus:z-20 focus:outline-offset-0"><?= '<' ?>
                         </button>
 

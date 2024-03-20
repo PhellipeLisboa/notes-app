@@ -50,3 +50,14 @@ function old($key, $default = '')
 {
     return Core\Session::get('old')[$key] ?? $default;
 }
+
+
+function isset_post($key, $default = null) {
+
+    if (isset($_POST[$key])) {
+        return $_POST[$key];
+    } else {
+        return $default;
+    }
+    
+}

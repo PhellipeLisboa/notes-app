@@ -6,48 +6,22 @@ use Core\App;
 use Http\Pagination\Paginator;
 
 
-if (isset($_POST['elements_per_page']) && $_POST['elements_per_page'] > 0 && is_numeric($_POST['elements_per_page'])) {
-    $elements_per_page = (int) $_POST['elements_per_page'];
-}
-if (isset($_POST['last'])) {
-    $last_current = $_POST['last'];
-}
-if (isset($_POST['current'])) {
-    $current_page = $_POST['current'];
-}
-if (isset($_POST['next'])) {
-    $last_current = $_POST['next'];
-}
-
-
 $db = App::resolve(Database::class);
 $notes = $db->query('SELECT * FROM notes WHERE user_id = :user_id', [
     'user_id' => $_SESSION['user']['id']
 ])->get();
 
-$paginator = new Paginator($notes, $elements_per_page ?? 5);
+
+$default_itens_per_page = 4;
+$paginator = new Paginator($notes, (int) isset_post('elements_per_page', $default_itens_per_page));
+
 $pages = $paginator->turnIntoPages();
 
-
-if (!isset($_POST['current'])) {
-    $current_page = 0;
-}
-
-if (isset($_POST['last'])) {
-    if ($last_current >= 1) {
-        $current_page = (int) $last_current - 1;
-    }
-}
-
-if (isset($_POST['next'])) {
-    if ($last_current < Count($pages) ) {
-        $current_page = (int) $last_current + 1;   
-    }
-}
-
-if ($current_page > (int) array_key_last($pages)) {
-    $current_page = (int) array_key_last($pages);
-}   
+$current_page = $paginator->handleNavigation([
+    'previous' => isset_post('previous'),
+    'current' => (int) isset_post('current', 0),
+    'next' => isset_post('next'),
+]);
 
 
 view("notes/index.view.php", [
@@ -57,5 +31,5 @@ view("notes/index.view.php", [
     'pages' => $pages,
     'notes' => $notes,
     'current_page' => $current_page ?? 0,
-    'elements_per_page' => $paginator->elements_per_page,
+    'elements_per_page' => $paginator->ElementsPerPage(),
 ]);
