@@ -32,7 +32,7 @@ class Paginator
         if (isset($input_elements_per_page) && $input_elements_per_page > 0 && is_numeric($input_elements_per_page)) {
             $this->input_elements_per_page = $input_elements_per_page;
         } else {
-            $this->input_elements_per_page = 4;
+            $this->input_elements_per_page = 5;
         }
         
     }

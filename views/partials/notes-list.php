@@ -1,9 +1,9 @@
-<div class="min-h-96 pt-2">
+<div class="min-h-[435px]">
 
     <ul role="list" class="divide-y divide-gray-100">
         <?php for ($i=$pages[$current_page ?? 1]['start']; $i <= $pages[$current_page ?? 0]['end']; $i++) : ?>
 
-        <li class="flex justify-between gap-x-6 mb-3 px-5 py-4 bg-neutral-200 rounded-lg shadow-inner">
+        <li class="flex justify-between gap-x-6 mb-2 px-5 py-4 bg-neutral-200 rounded-lg shadow-inner">
             <div class="flex min-w-0 gap-x-4">
                 <div class="min-w-0 flex-initial">
                     <a href="/note?id=<?= $notes[$i]['id'] ?>"

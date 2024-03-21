@@ -10,7 +10,7 @@
             <input type="hidden" name="id" value="<?= $note['id']?>">
 
             <div class="space-y-12">
-                <div class="border-b bg-gray-200 border-gray-900/10 pb-3 px-2 rounded-lg shadow-lg">
+                <div class="border bg-gray-200 border-gray-900/10 pb-3 px-2 rounded-lg shadow-lg">
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
                         <div class="col-span-full">

@@ -12,7 +12,7 @@ $notes = $db->query('SELECT * FROM notes WHERE user_id = :user_id', [
 ])->get();
 
 
-$default_itens_per_page = 4;
+$default_itens_per_page = 5;
 $paginator = new Paginator($notes, (int) isset_post('elements_per_page', $default_itens_per_page));
 
 $pages = $paginator->turnIntoPages();

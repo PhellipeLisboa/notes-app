@@ -3,13 +3,13 @@
 <?php require(base_path('views/partials/banner.php')); ?>
 
 <main>
-    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-gray-400 mt-5 rounded-lg shadow-lg">
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-gray-300 mt-5 rounded-lg shadow-lg">
 
 
-        <div class="bg-neutral-200 rounded-lg p-3 shadow-xl">
+        <div class="bg-neutral-100 rounded-lg p-3 shadow-xl">
 
             <h1 class="text-lg font-bold "><?= htmlspecialchars($note['title']) ?></h1>
-            <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+            <hr class="h-px my-2 bg-gray-900 border-0 dark:bg-gray-700">
             <p class="mt-3  break-all"><?= htmlspecialchars($note['body']) ?></p>
         </div>
 
