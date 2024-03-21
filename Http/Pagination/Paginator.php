@@ -23,7 +23,7 @@ class Paginator
     {
         $this->total_itens = Count($array_to_paginate);
 
-        // Check if user's elements_per_page input was passed, if not unset($this->input_elements_per_page).
+        // Check if user's elements_per_page input was passed, if not: unset($this->input_elements_per_page).
         if ($input_elements_per_page === null) {
             unset($this->input_elements_per_page);
         }
@@ -56,7 +56,7 @@ class Paginator
 
     public function turnIntoPages()
     {
-        // Check if user's this->input_elements_per_page exist, if not use the default itens per page.
+        // Check if user's this->input_elements_per_page exist, if not: use the default itens per page.
   
         if (isset($this->input_elements_per_page)) {
             $this->elements_per_page = $this->input_elements_per_page;

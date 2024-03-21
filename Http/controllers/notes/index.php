@@ -23,6 +23,7 @@ $current_page = $paginator->handleNavigation([
     'next' => isset_post('next'),
 ]);
 
+/* Should be a redirect, not a view. */
 
 view("notes/index.view.php", [
     'heading' => 'Notes',
