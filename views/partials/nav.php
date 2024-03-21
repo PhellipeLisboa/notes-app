@@ -86,19 +86,6 @@
 
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="md:hidden" id="mobile-menu">
-            <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                    aria-current="page">Dashboard</a>
-                <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
-                <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-                <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
-                <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Reports</a>
-            </div>
             <div class="border-t border-gray-700 pb-3 pt-4">
                 <div class="flex items-center px-5">
                     <div class="flex-shrink-0">
@@ -106,19 +93,45 @@
                             src="https://openclipart.org/download/247319/abstract-user-flat-3.svg" alt="">
                     </div>
                     <div class="ml-3">
-                        <div class="text-base font-medium leading-none text-white">Tom Cook</div>
-                        <div class="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
+                        <div class="text-base font-medium leading-none text-white">
+                            <?= isset($_SESSION['user']['email']) ? $_SESSION['user']['email'] : 'Guest' ?>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-3 space-y-1 px-2">
-                    <a href="#"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your
-                        Profile</a>
-                    <a href="#"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
-                    <a href="#"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign
-                        out</a>
+
+                <div class="flex items-start flex-col px-5">
+
+                    <?php if ($_SESSION['user'] ?? false) : ?>
+
+                    <div class="mt-3 space-y-1 px-2 flex items-start flex-col">
+                        <a href="/"
+                            class="<?= urlIS('/') ? 'bg-gray-900 text-white' : 'text-gray-400' ?> block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700 hover:text-white"
+                            aria-current="page">Home</a>
+                    </div>
+
+                    <div class="mt-3 space-y-1 px-2 flex items-start flex-col">
+                        <a href="/notes"
+                            class="<?= urlIS('/notes') ? 'bg-gray-900 text-white' : 'text-gray-400' ?> block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700 hover:text-white">Notes</a>
+                    </div>
+
+                    <?php else : ?>
+                    <div class="mt-3 space-y-1 px-2 flex items-start flex-col">
+                        <a href="/register"
+                            class="<?= urlIS('/register') ? 'bg-gray-900 text-white' : 'text-gray-400' ?> block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700 hover:text-white">Register</a>
+                        <a href="/login"
+                            class="<?= urlIS('/login') ? 'bg-gray-900 text-white' : 'text-gray-400' ?> block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700 hover:text-white">Login</a>
+
+                        <form action="/session" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+
+                            <button
+                                class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Log
+                                out</button>
+                        </form>
+
+                        <?php endif; ?>
+                    </div>
+
                 </div>
             </div>
         </div>

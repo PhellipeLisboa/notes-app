@@ -25,7 +25,7 @@
                 </p>
             </div>
 
-            <div class="border-black border-l-2 rounded-xl"></div>
+            <div class="border-black opacity-65 border-l-[1px] rounded-xl"></div>
 
             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                 <form action="/note" method="POST">
@@ -41,5 +41,4 @@
 
         <?php endfor; ?>
     </ul>
-
 </div>

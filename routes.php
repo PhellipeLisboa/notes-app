@@ -13,7 +13,7 @@ $router->get('/note/edit', 'notes/edit.php')->only('auth');
 $router->patch('/note', 'notes/update.php')->only('auth');
 
 
-$router->get('/register-for-note', 'registration/create.php')->only('guest');
+$router->get('/login-for-note', 'session/create.php')->only('guest');
 $router->get('/notes/create', 'notes/create.php')->only('auth');
 $router->post('/notes', 'notes/store.php')->only('auth'); 
 
