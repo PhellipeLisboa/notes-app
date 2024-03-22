@@ -4,12 +4,21 @@
 use Core\Response;
 
 
-function dd($value) {
-    echo "<pre>";
-    var_dump($value);
-    echo "</pre>";
+function dd($values_array) 
+{
+    foreach ($values_array as $key => $value) {
+        echo "<pre>";
+        echo "<strong>{$key}: </strong>";
+        echo "<br>";
+        echo "<br>";
+        var_dump($value);
+        echo "<br>";
+        echo "<hr>";
+        echo "</pre>";
+    }
+    
     die();
-};
+}
 
 
 function urlIS($value) {
