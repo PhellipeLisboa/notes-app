@@ -77,3 +77,13 @@ function isset_post($key, $default = null) {
     }
     
 }
+
+function isset_get($key, $default = null) {
+
+    if (isset($_GET[$key])) {
+        return $_GET[$key];
+    } else {
+        return $default;
+    }
+    
+}
