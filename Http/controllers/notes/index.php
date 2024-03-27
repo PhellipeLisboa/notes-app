@@ -33,7 +33,7 @@ if (empty($notes)) {
     $notes = $db->query('SELECT * FROM notes WHERE user_id = :user_id', [
         'user_id' => $_SESSION['user']['id']
     ])->get();
-    $default_itens_per_page = 5;
+    $default_itens_per_page = 4;
 } 
 
 

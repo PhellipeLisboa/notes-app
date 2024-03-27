@@ -1,4 +1,4 @@
-<div class="min-h-[435px]">
+<div class="min-h-[360px]">
 
     <ul role="list" class="divide-y divide-gray-100">
         <?php for ($i=$pages[$current_page ?? 1]['start']; $i <= $pages[$current_page ?? 0]['end']; $i++) : ?>
